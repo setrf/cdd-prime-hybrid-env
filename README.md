@@ -51,6 +51,20 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - Eval config template: `configs/eval/cdd_hybrid.toml`
 - Prime-RL config template: `configs/prime-rl/cdd_hybrid.toml`
 
+### Live Eval (Current CLI Stack)
+
+On the currently installed stack (`prime` 0.4.x + `verifiers` 0.1.5), local evaluation is run with `vf-eval`:
+
+```bash
+PRIME_API_KEY=... vf-eval cdd_hybrid \
+  -m qwen/qwen3-235b-a22b-instruct-2507 \
+  -b https://api.pinference.ai/api/v1 \
+  -k PRIME_API_KEY \
+  -n 2 -r 1 \
+  -a '{"dataset_path":"data/processed/train.jsonl","eval_dataset_path":"data/processed/test.jsonl"}' \
+  -s
+```
+
 ## Comments
 
 - The current dataset is a seed set intended for pipeline validation and should be expanded for real benchmarking.

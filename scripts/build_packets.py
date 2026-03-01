@@ -131,6 +131,12 @@ def main() -> None:
         abnormal = _as_float(row.get("abnormal_return_730d", ""))
         deal_completed = 1 if row["status"].strip().lower() == "completed" else 0
 
+        answer_payload = {
+            "deal_completed": deal_completed,
+            "outcome_label": outcome_label,
+            "abnormal_return_730d": abnormal,
+        }
+
         packet: dict[str, Any] = {
             "deal_id": row["deal_id"],
             "decision_date": row["decision_date"],
@@ -138,11 +144,8 @@ def main() -> None:
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": build_user_prompt(row)},
             ],
-            "answer": {
-                "deal_completed": deal_completed,
-                "outcome_label": outcome_label,
-                "abnormal_return_730d": abnormal,
-            },
+            # Some verifiers versions require answer to be string-typed.
+            "answer": json.dumps(answer_payload, sort_keys=True),
             "info": {
                 "acquirer": row["acquirer"],
                 "target": row["target"],
@@ -154,6 +157,9 @@ def main() -> None:
                 "regulatory_risk": row["regulatory_risk"],
                 "deal_value_usd_b": float(row["deal_value_usd_b"]),
                 "primary_source": row.get("primary_source", ""),
+                "true_outcome_label": outcome_label,
+                "true_deal_completed": deal_completed,
+                "true_abnormal_return_730d": abnormal,
             },
             "evidence_items": build_evidence_items(row),
         }

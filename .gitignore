@@ -4,3 +4,4 @@ __pycache__/
 .env
 configs/endpoints/endpoints.toml
 outputs/
+data/interim/*_live.jsonl

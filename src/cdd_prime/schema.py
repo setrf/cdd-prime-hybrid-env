@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from datetime import date
 from typing import Any
 
@@ -52,10 +53,23 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
                 errors.append(f"prompt[{i}] missing role/content")
 
     answer = packet.get("answer")
-    if not isinstance(answer, dict):
-        errors.append("answer must be dict")
+    answer_obj: dict[str, Any] | None = None
+    if isinstance(answer, dict):
+        answer_obj = answer
+    elif isinstance(answer, str):
+        try:
+            parsed = json.loads(answer)
+            if isinstance(parsed, dict):
+                answer_obj = parsed
+            else:
+                errors.append("answer string must decode to dict JSON")
+        except json.JSONDecodeError:
+            errors.append("answer string must be valid JSON")
     else:
-        missing_answer = REQUIRED_ANSWER_KEYS - set(answer.keys())
+        errors.append("answer must be dict or JSON string")
+
+    if answer_obj is not None:
+        missing_answer = REQUIRED_ANSWER_KEYS - set(answer_obj.keys())
         if missing_answer:
             errors.append(f"missing answer keys: {sorted(missing_answer)}")
 

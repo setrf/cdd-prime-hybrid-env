@@ -45,6 +45,9 @@ def _chat_completion(base_url: str, api_key: str, model: str, messages: list[dic
         headers={
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
+            # Cloudflare/WAF may block default urllib user-agent.
+            "User-Agent": "Mozilla/5.0 (compatible; cdd-prime-probe/1.0)",
+            "Accept": "application/json",
         },
     )
     with request.urlopen(req, timeout=120) as resp:

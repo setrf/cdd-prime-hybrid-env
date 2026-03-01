@@ -107,6 +107,19 @@ def _safe_probability(parsed: dict[str, Any]) -> float | None:
     return value
 
 
+def _answer_obj(answer: Any) -> dict[str, Any] | None:
+    if isinstance(answer, dict):
+        return answer
+    if isinstance(answer, str):
+        try:
+            parsed = json.loads(answer)
+        except json.JSONDecodeError:
+            return None
+        if isinstance(parsed, dict):
+            return parsed
+    return None
+
+
 def _recommended_label(parsed: dict[str, Any]) -> int | None:
     rec = str(parsed.get("recommendation", "")).strip().upper()
     if rec == "GO":
@@ -152,13 +165,20 @@ async def coverage_reward(completion: Any) -> float:
     return covered / len(WORKSTREAMS)
 
 
-async def evidence_citation_reward(completion: Any, evidence_items: list[dict[str, Any]]) -> float:
+async def evidence_citation_reward(
+    completion: Any,
+    evidence_items: list[dict[str, Any]] | None = None,
+) -> float:
     parsed = _extract_json(_completion_text(completion))
     if parsed is None:
         return 0.0
     citations = parsed.get("evidence_citations", [])
     if not isinstance(citations, list) or not citations:
         return 0.0
+
+    # Fallback when runtime does not inject evidence_items into reward args.
+    if not evidence_items:
+        return min(1.0, len({str(x) for x in citations}) / 3.0)
 
     valid_ids = {str(e.get("evidence_id", "")) for e in evidence_items}
     cited = {str(x) for x in citations}
@@ -168,25 +188,31 @@ async def evidence_citation_reward(completion: Any, evidence_items: list[dict[st
     return min(1.0, hits / 3.0)
 
 
-async def calibration_reward(completion: Any, answer: dict[str, Any]) -> float:
+async def calibration_reward(completion: Any, answer: Any) -> float:
     parsed = _extract_json(_completion_text(completion))
     if parsed is None:
         return 0.0
     prob = _safe_probability(parsed)
     if prob is None:
         return 0.0
-    y = float(answer.get("outcome_label", 0))
+    answer_dict = _answer_obj(answer)
+    if answer_dict is None:
+        return 0.0
+    y = float(answer_dict.get("outcome_label", 0))
     return 1.0 - (prob - y) ** 2
 
 
-async def decision_alignment_reward(completion: Any, answer: dict[str, Any]) -> float:
+async def decision_alignment_reward(completion: Any, answer: Any) -> float:
     parsed = _extract_json(_completion_text(completion))
     if parsed is None:
         return 0.0
     pred = _recommended_label(parsed)
     if pred is None:
         return 0.0
-    y = int(answer.get("outcome_label", 0))
+    answer_dict = _answer_obj(answer)
+    if answer_dict is None:
+        return 0.0
+    y = int(answer_dict.get("outcome_label", 0))
     return 1.0 if pred == y else 0.0
 
 

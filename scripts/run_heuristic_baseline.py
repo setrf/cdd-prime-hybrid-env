@@ -86,6 +86,16 @@ def score_packet(info: dict) -> tuple[float, list[str]]:
     return clamp(p), reasons
 
 
+def true_label_from_answer(answer: object) -> int:
+    if isinstance(answer, dict):
+        return int(answer["outcome_label"])
+    if isinstance(answer, str):
+        parsed = json.loads(answer)
+        if isinstance(parsed, dict) and "outcome_label" in parsed:
+            return int(parsed["outcome_label"])
+    raise ValueError("answer is not a valid dict or JSON string with outcome_label")
+
+
 def main() -> None:
     args = parse_args()
     dataset_path = Path(args.dataset)
@@ -106,7 +116,7 @@ def main() -> None:
             info = row["info"]
             prob, reasons = score_packet(info)
             pred = 1 if prob >= args.threshold else 0
-            truth = int(row["answer"]["outcome_label"])
+            truth = true_label_from_answer(row["answer"])
 
             labels.append(truth)
             probs.append(prob)

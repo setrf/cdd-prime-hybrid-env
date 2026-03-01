@@ -31,7 +31,16 @@ def load_dataset(path: Path) -> dict[str, int]:
             if not line:
                 continue
             row = json.loads(line)
-            out[row["deal_id"]] = int(row["answer"]["outcome_label"])
+            answer = row.get("answer")
+            if isinstance(answer, dict):
+                out[row["deal_id"]] = int(answer["outcome_label"])
+            elif isinstance(answer, str):
+                parsed = json.loads(answer)
+                if not isinstance(parsed, dict) or "outcome_label" not in parsed:
+                    raise ValueError(f"invalid answer JSON for deal_id={row.get('deal_id')}")
+                out[row["deal_id"]] = int(parsed["outcome_label"])
+            else:
+                raise ValueError(f"unsupported answer type for deal_id={row.get('deal_id')}")
     return out
 
 

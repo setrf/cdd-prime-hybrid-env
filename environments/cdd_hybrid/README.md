@@ -19,10 +19,13 @@ Prime CLI `env install` is for Hub IDs (`owner/name`), not local paths.
 ## Local Eval
 
 ```bash
-prime eval run cdd-hybrid \
-  -m gpt-4.1-mini \
+vf-eval cdd_hybrid \
+  -m qwen/qwen3-235b-a22b-instruct-2507 \
+  -b https://api.pinference.ai/api/v1 \
+  -k PRIME_API_KEY \
   -n 8 \
-  -a '{"dataset_path": "data/processed/train.jsonl", "eval_dataset_path": "data/processed/test.jsonl"}'
+  -a '{"dataset_path":"data/processed/train.jsonl","eval_dataset_path":"data/processed/test.jsonl"}' \
+  -s
 ```
 
 ## Environment Arguments
