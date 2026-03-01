@@ -1,0 +1,21 @@
+[project]
+name = "cdd-hybrid"
+description = "Hybrid CDD RL environment with process + outcome rewards"
+version = "0.1.0"
+requires-python = ">=3.10"
+tags = ["cdd", "m-and-a", "finance", "train", "eval"]
+dependencies = [
+  "verifiers>=0.1.5",
+  "datasets>=2.19.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["cdd_hybrid.py", "pyproject.toml", "README.md"]
+
+[tool.verifiers.eval]
+num_examples = 8
+rollouts_per_example = 3

@@ -1,0 +1,692 @@
+{
+  "count": 134,
+  "groups": {
+    "api-reference": 76,
+    "cli-reference": 6,
+    "faq": 1,
+    "guides": 2,
+    "hosted-training": 6,
+    "inference": 4,
+    "introduction": 1,
+    "prime-rl": 10,
+    "sandboxes": 4,
+    "tutorials-environments": 10,
+    "tutorials-multi-node-cluster": 2,
+    "tutorials-on-demand-cloud": 1,
+    "tutorials-reserved-clusters": 1,
+    "tutorials-storage": 3,
+    "verifiers": 7
+  },
+  "entries": [
+    {
+      "title": "API keys",
+      "source": "https://docs.primeintellect.ai/api-reference/api-keys",
+      "summary": "How to generate and use authentication keys with our API"
+    },
+    {
+      "title": "Get Disks Availability",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-disks-availability",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/disks"
+    },
+    {
+      "title": "Get Gpu Availability",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-gpu-availability",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/gpus"
+    },
+    {
+      "title": "Get Gpu Summary",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-gpu-summary",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/gpu-summary"
+    },
+    {
+      "title": "Get Legacy Cluster Availability",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-legacy-cluster-availability",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/clusters"
+    },
+    {
+      "title": "Get Legacygpu Availability",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-legacygpu-availability",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/"
+    },
+    {
+      "title": "Get Multinode Availability",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-multinode-availability",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/multi-node"
+    },
+    {
+      "title": "Get Multinode Summary",
+      "source": "https://docs.primeintellect.ai/api-reference/availability/get-multinode-summary",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/availability/multi-node-summary"
+    },
+    {
+      "title": "Get Availability Information",
+      "source": "https://docs.primeintellect.ai/api-reference/check-gpu-availability",
+      "summary": "How to check GPU, cluster, and disk availability and pricing"
+    },
+    {
+      "title": "Create Disk",
+      "source": "https://docs.primeintellect.ai/api-reference/disks/create-disk",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/disks/"
+    },
+    {
+      "title": "Delete Disk",
+      "source": "https://docs.primeintellect.ai/api-reference/disks/delete-disk",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/disks/{disk_id}"
+    },
+    {
+      "title": "Get Disk",
+      "source": "https://docs.primeintellect.ai/api-reference/disks/get-disk",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/disks/{disk_id}"
+    },
+    {
+      "title": "List Disks",
+      "source": "https://docs.primeintellect.ai/api-reference/disks/list-disks",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/disks/"
+    },
+    {
+      "title": "Update Disk",
+      "source": "https://docs.primeintellect.ai/api-reference/disks/update-disk",
+      "summary": "https://api.primeintellect.ai/openapi.json patch /api/v1/disks/{disk_id}"
+    },
+    {
+      "title": "Bulk Delete Evaluations",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/bulk-delete-evaluations",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/evaluations/bulk-delete"
+    },
+    {
+      "title": "Create Evaluation",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/create-evaluation",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/evaluations/"
+    },
+    {
+      "title": "Delete Evaluation",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/delete-evaluation",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/evaluations/{evaluation_id}"
+    },
+    {
+      "title": "Finalize Evaluation",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/finalize-evaluation",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/evaluations/{evaluation_id}/finalize"
+    },
+    {
+      "title": "Get Evaluation",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/get-evaluation",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/evaluations/{evaluation_id}"
+    },
+    {
+      "title": "Get Samples",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/get-samples",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/evaluations/{evaluation_id}/samples"
+    },
+    {
+      "title": "List Evaluations",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/list-evaluations",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/evaluations/"
+    },
+    {
+      "title": "Push Samples",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/push-samples",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/evaluations/{evaluation_id}/samples"
+    },
+    {
+      "title": "Update Evaluation",
+      "source": "https://docs.primeintellect.ai/api-reference/evals/update-evaluation",
+      "summary": "https://api.primeintellect.ai/openapi.json put /api/v1/evaluations/{evaluation_id}"
+    },
+    {
+      "title": "Validate Frp Plugin",
+      "source": "https://docs.primeintellect.ai/api-reference/frp-plugin/validate-frp-plugin",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/frp/validate"
+    },
+    {
+      "title": "Delete User Image",
+      "source": "https://docs.primeintellect.ai/api-reference/images/delete-user-image",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/images/{image_name}/{image_tag}"
+    },
+    {
+      "title": "Get Build Status",
+      "source": "https://docs.primeintellect.ai/api-reference/images/get-build-status",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/images/build/{build_id}"
+    },
+    {
+      "title": "Initiate Image Build",
+      "source": "https://docs.primeintellect.ai/api-reference/images/initiate-image-build",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/images/build"
+    },
+    {
+      "title": "List Image Builds",
+      "source": "https://docs.primeintellect.ai/api-reference/images/list-image-builds",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/images/builds"
+    },
+    {
+      "title": "List User Images",
+      "source": "https://docs.primeintellect.ai/api-reference/images/list-user-images",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/images"
+    },
+    {
+      "title": "Start Image Build",
+      "source": "https://docs.primeintellect.ai/api-reference/images/start-image-build",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/images/build/{build_id}/start"
+    },
+    {
+      "title": "Chat Completions",
+      "source": "https://docs.primeintellect.ai/api-reference/inference-chat-completions",
+      "summary": "Generate text responses using language models"
+    },
+    {
+      "title": "Models",
+      "source": "https://docs.primeintellect.ai/api-reference/inference-models",
+      "summary": "List and retrieve language models for inference"
+    },
+    {
+      "title": "API Overview",
+      "source": "https://docs.primeintellect.ai/api-reference/introduction",
+      "summary": "The Prime Intellect API provides programmatic access to our full platform. Get started by [setting up an API Key](./api-keys)."
+    },
+    {
+      "title": "Managing Disks",
+      "source": "https://docs.primeintellect.ai/api-reference/managing-disks",
+      "summary": "How to create and manage network-attached storage disks"
+    },
+    {
+      "title": "Managing Pods",
+      "source": "https://docs.primeintellect.ai/api-reference/managing-pods",
+      "summary": "How to get pods, statuses and delete instances"
+    },
+    {
+      "title": "Create Pod",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/create-pod",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/pods/"
+    },
+    {
+      "title": "Delete Pod",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/delete-pod",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/pods/{pod_id}"
+    },
+    {
+      "title": "Get Pod",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/get-pod",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/pods/{pod_id}"
+    },
+    {
+      "title": "Get Pod Logs Api",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/get-pod-logs-api",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/pods/{pod_id}/log"
+    },
+    {
+      "title": "Get Pods",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/get-pods",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/pods/"
+    },
+    {
+      "title": "Get Pods History",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/get-pods-history",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/pods/history"
+    },
+    {
+      "title": "Get Pods Status",
+      "source": "https://docs.primeintellect.ai/api-reference/pods/get-pods-status",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/pods/status"
+    },
+    {
+      "title": "Provision Instance",
+      "source": "https://docs.primeintellect.ai/api-reference/provision-gpu",
+      "summary": "How to provision an instance using availability data"
+    },
+    {
+      "title": "Bulk Delete Sandboxes Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/bulk-delete-sandboxes-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/sandbox"
+    },
+    {
+      "title": "Close Ssh Session Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/close-ssh-session-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/sandbox/{sandbox_id}/ssh-session/{session_id}"
+    },
+    {
+      "title": "Create Sandbox Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/create-sandbox-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/sandbox"
+    },
+    {
+      "title": "Create Ssh Session Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/create-ssh-session-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/sandbox/{sandbox_id}/ssh-session"
+    },
+    {
+      "title": "Delete Sandbox Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/delete-sandbox-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/sandbox/{sandbox_id}"
+    },
+    {
+      "title": "Expose Port Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/expose-port-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/sandbox/{sandbox_id}/expose"
+    },
+    {
+      "title": "Get Sandbox Auth Token",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-auth-token",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/sandbox/{sandbox_id}/auth"
+    },
+    {
+      "title": "Get Sandbox Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/sandbox/{sandbox_id}"
+    },
+    {
+      "title": "Get Sandbox Error Context Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-error-context-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/sandbox/{sandbox_id}/error-context"
+    },
+    {
+      "title": "Get Sandbox Logs Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-logs-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/sandbox/{sandbox_id}/logs"
+    },
+    {
+      "title": "List All Exposed Ports Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/list-all-exposed-ports-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/sandbox/expose/all"
+    },
+    {
+      "title": "List Exposed Ports Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/list-exposed-ports-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/sandbox/{sandbox_id}/expose"
+    },
+    {
+      "title": "List Sandboxes",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/list-sandboxes",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/sandbox"
+    },
+    {
+      "title": "Unexpose Port Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/sandbox/unexpose-port-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/sandbox/{sandbox_id}/expose/{exposure_id}"
+    },
+    {
+      "title": "Create Secret",
+      "source": "https://docs.primeintellect.ai/api-reference/secrets/create-secret",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/secrets/"
+    },
+    {
+      "title": "Delete Secret",
+      "source": "https://docs.primeintellect.ai/api-reference/secrets/delete-secret",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/secrets/{secret_id}"
+    },
+    {
+      "title": "Get Secret",
+      "source": "https://docs.primeintellect.ai/api-reference/secrets/get-secret",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/secrets/{secret_id}"
+    },
+    {
+      "title": "List Secrets",
+      "source": "https://docs.primeintellect.ai/api-reference/secrets/list-secrets",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/secrets/"
+    },
+    {
+      "title": "Update Secret",
+      "source": "https://docs.primeintellect.ai/api-reference/secrets/update-secret",
+      "summary": "https://api.primeintellect.ai/openapi.json patch /api/v1/secrets/{secret_id}"
+    },
+    {
+      "title": "Delete Ssh Key",
+      "source": "https://docs.primeintellect.ai/api-reference/ssh-keys/delete-ssh-key",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/ssh_keys/{key_id}"
+    },
+    {
+      "title": "Get Ssh Keys",
+      "source": "https://docs.primeintellect.ai/api-reference/ssh-keys/get-ssh-keys",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/ssh_keys/"
+    },
+    {
+      "title": "Set Primary Key",
+      "source": "https://docs.primeintellect.ai/api-reference/ssh-keys/set-primary-key",
+      "summary": "https://api.primeintellect.ai/openapi.json patch /api/v1/ssh_keys/{key_id}"
+    },
+    {
+      "title": "Upload Ssh Key",
+      "source": "https://docs.primeintellect.ai/api-reference/ssh-keys/upload-ssh-key",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/ssh_keys/"
+    },
+    {
+      "title": "Check Docker Image",
+      "source": "https://docs.primeintellect.ai/api-reference/template/check-docker-image",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/template/check-docker-image"
+    },
+    {
+      "title": "List Registry Credentials",
+      "source": "https://docs.primeintellect.ai/api-reference/template/list-registry-credentials",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/template/registry-credentials"
+    },
+    {
+      "title": "Bulk Delete Tunnels Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/tunnel/bulk-delete-tunnels-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/tunnel"
+    },
+    {
+      "title": "Create Tunnel Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/tunnel/create-tunnel-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json post /api/v1/tunnel"
+    },
+    {
+      "title": "Delete Tunnel Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/tunnel/delete-tunnel-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json delete /api/v1/tunnel/{tunnel_id}"
+    },
+    {
+      "title": "Get Tunnel Status Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/tunnel/get-tunnel-status-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/tunnel/{tunnel_id}"
+    },
+    {
+      "title": "List Tunnels Endpoint",
+      "source": "https://docs.primeintellect.ai/api-reference/tunnel/list-tunnels-endpoint",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/tunnel"
+    },
+    {
+      "title": "Get Whoami",
+      "source": "https://docs.primeintellect.ai/api-reference/user/get-whoami",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/user/whoami"
+    },
+    {
+      "title": "List My Teams",
+      "source": "https://docs.primeintellect.ai/api-reference/user/list-my-teams",
+      "summary": "https://api.primeintellect.ai/openapi.json get /api/v1/user/teams"
+    },
+    {
+      "title": "Set Username Slug",
+      "source": "https://docs.primeintellect.ai/api-reference/user/set-username-slug",
+      "summary": "https://api.primeintellect.ai/openapi.json patch /api/v1/user/slug"
+    },
+    {
+      "title": "Get Availability Information",
+      "source": "https://docs.primeintellect.ai/cli-reference/check-gpu-availability",
+      "summary": "How to check GPU and disk availability and pricing"
+    },
+    {
+      "title": "Configuration",
+      "source": "https://docs.primeintellect.ai/cli-reference/config-cli",
+      "summary": "Configure your Prime CLI settings"
+    },
+    {
+      "title": "Environments Hub",
+      "source": "https://docs.primeintellect.ai/cli-reference/environments",
+      "summary": "Create, install and manage environments from the Environments Hub"
+    },
+    {
+      "title": "Overview",
+      "source": "https://docs.primeintellect.ai/cli-reference/introduction",
+      "summary": "Command line interface for managing Prime Intellect compute, RL environments and code sandboxes."
+    },
+    {
+      "title": "Managing Disks",
+      "source": "https://docs.primeintellect.ai/cli-reference/managing-disks",
+      "summary": "How to create and manage network-attached storage using the CLI"
+    },
+    {
+      "title": "Provision Instance",
+      "source": "https://docs.primeintellect.ai/cli-reference/provision-gpu",
+      "summary": "How to provision an instance using availability data"
+    },
+    {
+      "title": "FAQ",
+      "source": "https://docs.primeintellect.ai/faq",
+      "summary": "Frequently Asked Questions"
+    },
+    {
+      "title": "Training Recipes",
+      "source": "https://docs.primeintellect.ai/guides/recipes",
+      "summary": "Practical RL training recipes for math reasoning, code generation, tool use, and more on Lab."
+    },
+    {
+      "title": "Training Search Agents",
+      "source": "https://docs.primeintellect.ai/guides/search-agents",
+      "summary": "Build three progressive RL environments for document search and run hosted training on Lab."
+    },
+    {
+      "title": "Advanced Configurations",
+      "source": "https://docs.primeintellect.ai/hosted-training/advanced-configs",
+      "summary": "Full configuration reference for Hosted Training runs"
+    },
+    {
+      "title": "End-to-End Training Run",
+      "source": "https://docs.primeintellect.ai/hosted-training/end-to-end-run",
+      "summary": "Walk through a complete hosted RL training run from environment setup to results"
+    },
+    {
+      "title": "Getting Started",
+      "source": "https://docs.primeintellect.ai/hosted-training/getting-started",
+      "summary": "Launch your first hosted RL training run in minutes"
+    },
+    {
+      "title": "Models & Pricing",
+      "source": "https://docs.primeintellect.ai/hosted-training/models-and-pricing",
+      "summary": "Supported models and pricing for Hosted Training"
+    },
+    {
+      "title": "Troubleshooting",
+      "source": "https://docs.primeintellect.ai/hosted-training/troubleshooting",
+      "summary": "Common issues and solutions for Hosted Training and Lab"
+    },
+    {
+      "title": "What is Lab?",
+      "source": "https://docs.primeintellect.ai/hosted-training/what-is-lab",
+      "summary": "An overview of Lab, Prime Intellect's open research platform for post-training"
+    },
+    {
+      "title": "Deploying LoRA Adapters for Inference",
+      "source": "https://docs.primeintellect.ai/inference/adapter-deployments",
+      "summary": "Deploy trained LoRA adapters from your hosted training runs and query them via an OpenAI-compatible API"
+    },
+    {
+      "title": "Inference Overview",
+      "source": "https://docs.primeintellect.ai/inference/overview",
+      "summary": "Access powerful language models through Prime Intellect Inference API"
+    },
+    {
+      "title": "Using Team Accounts",
+      "source": "https://docs.primeintellect.ai/inference/team-accounts",
+      "summary": "How to use Prime Inference with team accounts"
+    },
+    {
+      "title": "Advanced Usage",
+      "source": "https://docs.primeintellect.ai/inference/usage",
+      "summary": "Streaming, advanced parameters, and usage patterns"
+    },
+    {
+      "title": "Introduction",
+      "source": "https://docs.primeintellect.ai/introduction",
+      "summary": "Welcome to the Prime Intellect Documentation"
+    },
+    {
+      "title": "Async",
+      "source": "https://docs.primeintellect.ai/prime-rl/async",
+      "summary": "PRIME-RL implements asynchronous off-policy training, instead of the traditional synchronous on-policy training. This means that we allow inference to generate rollouts from a stale policy up to $k$ (in the code we call this `max_async_level`) steps ahead of the trainer. With `k=1` and trainer and inference step timings being equal, this allows to run without any idle time on either the trainer or inference. By default, we set `k=2` to allow overlap with a weight broadcast over the Internet, which is needed for decentralized training."
+    },
+    {
+      "title": "Benchmarking",
+      "source": "https://docs.primeintellect.ai/prime-rl/benchmarking",
+      "summary": "We provide a convenient way to benchmark the performance, mainly measured in throughput and MFU, of the inference engine and trainer using the `--bench` flag. It will run each module in isolation for a few steps and log performance benchmark results in a rich table to the console."
+    },
+    {
+      "title": "Checkpointing",
+      "source": "https://docs.primeintellect.ai/prime-rl/checkpointing",
+      "summary": "Checkpointing is non-standard due to trainer/orchestrator separation and natural asynchrony."
+    },
+    {
+      "title": "Configs",
+      "source": "https://docs.primeintellect.ai/prime-rl/configs",
+      "summary": "We use `pydantic-settings` with some custom functionality for configuring runs. We support the following sources, in this order of precedence:"
+    },
+    {
+      "title": "Deployment",
+      "source": "https://docs.primeintellect.ai/prime-rl/deployment",
+      "summary": "You can deploy PRIME-RL on a single GPU and larger multi-node clusters."
+    },
+    {
+      "title": "Entrypoints",
+      "source": "https://docs.primeintellect.ai/prime-rl/entrypoints",
+      "summary": "The main usecase of PRIME-RL is RL training. Three main abstractions facilitate RL training: the **orchestrator**, the **trainer**, and the **inference** service."
+    },
+    {
+      "title": "Environments",
+      "source": "https://docs.primeintellect.ai/prime-rl/environments",
+      "summary": "PRIME-RL can train and evaluate in any [`verifiers`](https://github.com/willccbb/verifiers) environments. To train in a new environment, simply install it from the [Environment Hub](https://app.primeintellect.ai/dashboard/environments) or install a local environment."
+    },
+    {
+      "title": "Overview",
+      "source": "https://docs.primeintellect.ai/prime-rl/index",
+      "summary": "<Card title=\"GitHub Repository\" icon=\"github\" href=\"https://github.com/PrimeIntellect-ai/prime-rl\">"
+    },
+    {
+      "title": "Logging",
+      "source": "https://docs.primeintellect.ai/prime-rl/logging",
+      "summary": "prime-rl uses [loguru](https://loguru.readthedocs.io/en/stable/) for logging with a global logger pattern. Logs are written to both console and files under `{output_dir}/logs/`. For RL training, we recommend streaming file logs into tmux panes (as set up by `tmux.sh`)."
+    },
+    {
+      "title": "Troubleshooting",
+      "source": "https://docs.primeintellect.ai/prime-rl/troubleshooting",
+      "summary": "> My API keeps timing out."
+    },
+    {
+      "title": "Sandbox CLI Guide",
+      "source": "https://docs.primeintellect.ai/sandboxes/cli",
+      "summary": "Command-line workflows for managing sandboxes"
+    },
+    {
+      "title": "Sandboxes Overview",
+      "source": "https://docs.primeintellect.ai/sandboxes/overview",
+      "summary": "Why sandboxes exist, how to launch one, and what it costs"
+    },
+    {
+      "title": "Sandbox SDK Guide",
+      "source": "https://docs.primeintellect.ai/sandboxes/sdk",
+      "summary": "Automate sandbox lifecycles with the Python SDK"
+    },
+    {
+      "title": "Prime Tunnel",
+      "source": "https://docs.primeintellect.ai/sandboxes/tunnel",
+      "summary": "Expose local services to the internet through secure reverse proxy"
+    },
+    {
+      "title": "Create & Upload Environment",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/create",
+      "summary": "Learn how to create and upload environments to Prime Intellect's Environments Hub"
+    },
+    {
+      "title": "Environment Actions",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/environment-actions",
+      "summary": "Quick look at the automated checks that run on every environment push"
+    },
+    {
+      "title": "Environment Variables",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/environment-variables",
+      "summary": "Configure plain-text key-value pairs injected into your environment at runtime"
+    },
+    {
+      "title": "Overview",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/environments",
+      "summary": "Create, manage and share environments for reinforcement learning and evaluation"
+    },
+    {
+      "title": "Evaluating Environments",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/evaluating",
+      "summary": "Guide to running evaluations with Prime CLI using Prime Inference models"
+    },
+    {
+      "title": "Getting Started",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/getting-started",
+      "summary": "Create, manage and share environments for reinforcement learning and evaluation"
+    },
+    {
+      "title": "Hosted Evaluations",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/hosted-evaluations",
+      "summary": "Run environment evaluations on the Environments Hub"
+    },
+    {
+      "title": "Install & Use Environment",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/install",
+      "summary": "Learn how to install and use environments from the Prime Intellect Environments Hub"
+    },
+    {
+      "title": "Manage Collaborators",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/manage-collaborators",
+      "summary": "Add collaborators to private environments on the Environments Hub."
+    },
+    {
+      "title": "Secrets",
+      "source": "https://docs.primeintellect.ai/tutorials-environments/secrets",
+      "summary": "Create and link secrets across your environments"
+    },
+    {
+      "title": "Deploy Multi-Node Cluster",
+      "source": "https://docs.primeintellect.ai/tutorials-multi-node-cluster/deploy-multi-node",
+      "summary": "Deploy a multi-node cluster on the Prime Intellect Platform."
+    },
+    {
+      "title": "Slurm Orchestration",
+      "source": "https://docs.primeintellect.ai/tutorials-multi-node-cluster/slurm-orchestration",
+      "summary": "Deploy and manage multi-node clusters with Slurm workload orchestration on Prime Intellect Platform."
+    },
+    {
+      "title": "Deploy Custom Docker Image",
+      "source": "https://docs.primeintellect.ai/tutorials-on-demand-cloud/deploy-custom-docker-image",
+      "summary": "Deploy a custom Docker image to your Pod"
+    },
+    {
+      "title": "Cluster Monitoring",
+      "source": "https://docs.primeintellect.ai/tutorials-reserved-clusters/monitoring",
+      "summary": "Detect issues early and minimize downtime with production-ready monitoring"
+    },
+    {
+      "title": "Cluster storage",
+      "source": "https://docs.primeintellect.ai/tutorials-storage/cluster-storage",
+      "summary": "Configure persistent and ephemeral shared storage for multi-node clusters"
+    },
+    {
+      "title": "Create persistent storage",
+      "source": "https://docs.primeintellect.ai/tutorials-storage/create-persistent-storage",
+      "summary": "Create storage that can be shared between instances"
+    },
+    {
+      "title": "Use persistent storage with instances",
+      "source": "https://docs.primeintellect.ai/tutorials-storage/use-persistent-storage-with-instances",
+      "summary": "How to attach and use persistent storage with instances and clusters"
+    },
+    {
+      "title": "Development",
+      "source": "https://docs.primeintellect.ai/verifiers/development",
+      "summary": "This guide covers setup, testing, and contributing to the verifiers package."
+    },
+    {
+      "title": "Environments",
+      "source": "https://docs.primeintellect.ai/verifiers/environments",
+      "summary": "This guide walks through building environments in Verifiers, from simple single-turn tasks to complex multi-turn agents with tools. See [Overview](/verifiers/overview) for how to initialize a new environment template."
+    },
+    {
+      "title": "Evaluation",
+      "source": "https://docs.primeintellect.ai/verifiers/evaluation",
+      "summary": "This section explains how to run evaluations with Verifiers environments. See [Environments](/verifiers/environments) for information on building your own environments."
+    },
+    {
+      "title": "Faqs",
+      "source": "https://docs.primeintellect.ai/verifiers/faqs",
+      "summary": "Use `prime eval run` with a small sample:"
+    },
+    {
+      "title": "Overview",
+      "source": "https://docs.primeintellect.ai/verifiers/overview",
+      "summary": "<Card title=\"GitHub Repository\" icon=\"github\" href=\"https://github.com/PrimeIntellect-ai/verifiers\">"
+    },
+    {
+      "title": "Reference",
+      "source": "https://docs.primeintellect.ai/verifiers/reference",
+      "summary": "* [Type Aliases](#type-aliases)"
+    },
+    {
+      "title": "Training",
+      "source": "https://docs.primeintellect.ai/verifiers/training",
+      "summary": "This section covers how to use Verifiers environments for RL training with our Hosted Training platform, our open-source `prime-rl` trainer, or other supported libraries."
+    }
+  ]
+}

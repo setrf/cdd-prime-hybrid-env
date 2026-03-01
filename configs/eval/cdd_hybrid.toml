@@ -1,0 +1,21 @@
+# Prime eval multi-environment config template for cdd-hybrid.
+# Adjust keys to match the exact Prime CLI version in use.
+
+endpoints_path = "configs/endpoints/endpoints.toml"
+
+[[eval]]
+env_id = "cdd-hybrid"
+endpoint_id = "qwen3-235b-i"
+num_examples = 12
+rollouts_per_example = 4
+save_results = true
+state_columns = ["deal_id"]
+
+[eval.env_args]
+dataset_path = "data/processed/train.jsonl"
+eval_dataset_path = "data/processed/test.jsonl"
+
+[eval.sampling_args]
+temperature = 0.2
+top_p = 0.9
+max_tokens = 1200

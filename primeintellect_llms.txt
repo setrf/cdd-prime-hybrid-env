@@ -1,0 +1,193 @@
+# Prime Intellect Docs
+
+## Docs
+
+- [API keys](https://docs.primeintellect.ai/api-reference/api-keys.md): How to generate and use authentication keys with our API
+- [Get Disks Availability](https://docs.primeintellect.ai/api-reference/availability/get-disks-availability.md)
+- [Get Gpu Availability](https://docs.primeintellect.ai/api-reference/availability/get-gpu-availability.md)
+- [Get Gpu Summary](https://docs.primeintellect.ai/api-reference/availability/get-gpu-summary.md): Get GPU pricing summary data grouped by GPU type and instance count.
+- [Get Legacy Cluster Availability](https://docs.primeintellect.ai/api-reference/availability/get-legacy-cluster-availability.md)
+- [Get Legacygpu Availability](https://docs.primeintellect.ai/api-reference/availability/get-legacygpu-availability.md)
+- [Get Multinode Availability](https://docs.primeintellect.ai/api-reference/availability/get-multinode-availability.md)
+- [Get Multinode Summary](https://docs.primeintellect.ai/api-reference/availability/get-multinode-summary.md): Get multi-node (cluster) pricing summary data grouped by GPU type and instance count.
+- [Get Availability Information](https://docs.primeintellect.ai/api-reference/check-gpu-availability.md): How to check GPU, cluster, and disk availability and pricing
+- [Create Disk](https://docs.primeintellect.ai/api-reference/disks/create-disk.md)
+- [Delete Disk](https://docs.primeintellect.ai/api-reference/disks/delete-disk.md)
+- [Get Disk](https://docs.primeintellect.ai/api-reference/disks/get-disk.md)
+- [List Disks](https://docs.primeintellect.ai/api-reference/disks/list-disks.md)
+- [Update Disk](https://docs.primeintellect.ai/api-reference/disks/update-disk.md)
+- [Bulk Delete Evaluations](https://docs.primeintellect.ai/api-reference/evals/bulk-delete-evaluations.md)
+- [Create Evaluation](https://docs.primeintellect.ai/api-reference/evals/create-evaluation.md): Create a new evaluation
+
+This endpoint supports:
+- Environment evaluations: Provide environments
+- Prime RL evaluations: Provide run_id
+- Suite evaluations: Provide suite_id
+
+Ownership:
+- If team_id is provided in request, the evaluation will be owned by the team
+- Otherwise, the evaluation will be owned by the authenticated user
+- [Delete Evaluation](https://docs.primeintellect.ai/api-reference/evals/delete-evaluation.md)
+- [Finalize Evaluation](https://docs.primeintellect.ai/api-reference/evals/finalize-evaluation.md): Mark an evaluation as complete and compute final statistics.
+- [Get Evaluation](https://docs.primeintellect.ai/api-reference/evals/get-evaluation.md): Get detailed information about a specific evaluation.
+- [Get Samples](https://docs.primeintellect.ai/api-reference/evals/get-samples.md): Get samples for a specific evaluation
+- [List Evaluations](https://docs.primeintellect.ai/api-reference/evals/list-evaluations.md): Get a list of evaluations owned by the authenticated user or their teams
+
+By default, returns all evaluations the user has access to (personal + all teams).
+- [Push Samples](https://docs.primeintellect.ai/api-reference/evals/push-samples.md): Push evaluation samples
+
+This endpoint can be called multiple times to stream samples as they're generated.
+- [Update Evaluation](https://docs.primeintellect.ai/api-reference/evals/update-evaluation.md): Update an existing evaluation
+- [Validate Frp Plugin](https://docs.primeintellect.ai/api-reference/frp-plugin/validate-frp-plugin.md): Validate frpc client connections.
+
+This endpoint is called by frps server plugin for:
+- Login: Validates tunnel token when client connects
+- NewProxy: Validates proxy creation requests
+
+This endpoint is public but security is enforced via per-tunnel
+token validation. An attacker would need both a valid tunnel_id AND
+the corresponding frp_token to get a successful response.
+- [Delete User Image](https://docs.primeintellect.ai/api-reference/images/delete-user-image.md): Delete a user image from the database and Google Artifact Registry.
+
+For team images, only the image creator or team admins can delete.
+- [Get Build Status](https://docs.primeintellect.ai/api-reference/images/get-build-status.md): Get the status of an image build.
+- [Initiate Image Build](https://docs.primeintellect.ai/api-reference/images/initiate-image-build.md): Initiate an image build process.
+
+Returns a presigned URL to upload the build context (tar.gz file).
+After uploading, call /images/build/{build_id}/start to begin the build.
+- [List Image Builds](https://docs.primeintellect.ai/api-reference/images/list-image-builds.md): List all image builds for the current user.
+- [List User Images](https://docs.primeintellect.ai/api-reference/images/list-user-images.md): List all images and builds accessible to the current user, including in-progress builds.
+- [Start Image Build](https://docs.primeintellect.ai/api-reference/images/start-image-build.md): Start the image build process after uploading the build context.
+
+This creates a sandbox with Docker-in-Docker to build and push the image.
+- [Chat Completions](https://docs.primeintellect.ai/api-reference/inference-chat-completions.md): Generate text responses using language models
+- [Models](https://docs.primeintellect.ai/api-reference/inference-models.md): List and retrieve language models for inference
+- [API Overview](https://docs.primeintellect.ai/api-reference/introduction.md)
+- [Managing Disks](https://docs.primeintellect.ai/api-reference/managing-disks.md): How to create and manage network-attached storage disks
+- [Managing Pods](https://docs.primeintellect.ai/api-reference/managing-pods.md): How to get pods, statuses and delete instances
+- [Create Pod](https://docs.primeintellect.ai/api-reference/pods/create-pod.md)
+- [Delete Pod](https://docs.primeintellect.ai/api-reference/pods/delete-pod.md)
+- [Get Pod](https://docs.primeintellect.ai/api-reference/pods/get-pod.md)
+- [Get Pod Logs Api](https://docs.primeintellect.ai/api-reference/pods/get-pod-logs-api.md): Get logs for a pod.
+
+Args:
+    tail: Number of most recent logs to return (default: 100)
+- [Get Pods](https://docs.primeintellect.ai/api-reference/pods/get-pods.md)
+- [Get Pods History](https://docs.primeintellect.ai/api-reference/pods/get-pods-history.md)
+- [Get Pods Status](https://docs.primeintellect.ai/api-reference/pods/get-pods-status.md)
+- [Provision Instance](https://docs.primeintellect.ai/api-reference/provision-gpu.md): How to provision an instance using availability data
+- [Bulk Delete Sandboxes Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/bulk-delete-sandboxes-endpoint.md): Bulk delete multiple sandboxes by IDs or labels
+- [Close Ssh Session Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/close-ssh-session-endpoint.md): Close an SSH session (removes the TCP exposure).
+- [Create Sandbox Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/create-sandbox-endpoint.md): Create a new code sandbox
+- [Create Ssh Session Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/create-ssh-session-endpoint.md): Create an SSH session using the SSH sidecar (no sshd required in the sandbox image).
+- [Delete Sandbox Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/delete-sandbox-endpoint.md): Delete a sandbox
+- [Expose Port Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/expose-port-endpoint.md): Expose a port from a sandbox
+- [Get Sandbox Auth Token](https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-auth-token.md): Get JWT token for direct sandbox access
+- [Get Sandbox Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-endpoint.md): Get a specific sandbox by ID
+- [Get Sandbox Error Context Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-error-context-endpoint.md): Get error context for a sandbox (optimized for SDK error handling flows)
+- [Get Sandbox Logs Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/get-sandbox-logs-endpoint.md): Get sandbox logs
+- [List All Exposed Ports Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/list-all-exposed-ports-endpoint.md): List all exposed ports across all sandboxes for the current user
+- [List Exposed Ports Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/list-exposed-ports-endpoint.md): List all exposed ports for a sandbox
+- [List Sandboxes](https://docs.primeintellect.ai/api-reference/sandbox/list-sandboxes.md): List sandboxes for user or team
+- [Unexpose Port Endpoint](https://docs.primeintellect.ai/api-reference/sandbox/unexpose-port-endpoint.md): Unexpose a previously exposed port
+- [Create Secret](https://docs.primeintellect.ai/api-reference/secrets/create-secret.md): Create a new global secret.
+
+The secret will be encrypted and stored securely. If teamId is provided,
+the secret will be associated with that team (requires team membership).
+- [Delete Secret](https://docs.primeintellect.ai/api-reference/secrets/delete-secret.md): Delete a secret.
+
+This operation cannot be undone. Secrets that are linked to environments
+will be automatically unlinked.
+- [Get Secret](https://docs.primeintellect.ai/api-reference/secrets/get-secret.md): Get a specific secret by ID.
+
+Note: The secret value is not returned, only metadata.
+- [List Secrets](https://docs.primeintellect.ai/api-reference/secrets/list-secrets.md): List global secrets for the authenticated user or a team.
+
+If teamId is provided, returns secrets for that team (requires team membership).
+Otherwise, returns the user's personal secrets.
+- [Update Secret](https://docs.primeintellect.ai/api-reference/secrets/update-secret.md): Update an existing secret.
+
+You can update the name, value, and/or description.
+- [Delete Ssh Key](https://docs.primeintellect.ai/api-reference/ssh-keys/delete-ssh-key.md)
+- [Get Ssh Keys](https://docs.primeintellect.ai/api-reference/ssh-keys/get-ssh-keys.md)
+- [Set Primary Key](https://docs.primeintellect.ai/api-reference/ssh-keys/set-primary-key.md)
+- [Upload Ssh Key](https://docs.primeintellect.ai/api-reference/ssh-keys/upload-ssh-key.md)
+- [Check Docker Image](https://docs.primeintellect.ai/api-reference/template/check-docker-image.md): Check whether a docker image is accessible (optionally with registry credentials).
+- [List Registry Credentials](https://docs.primeintellect.ai/api-reference/template/list-registry-credentials.md): List registry credentials owned by the requesting user or their teams.
+- [Bulk Delete Tunnels Endpoint](https://docs.primeintellect.ai/api-reference/tunnel/bulk-delete-tunnels-endpoint.md): Bulk delete multiple tunnels by IDs.
+- [Create Tunnel Endpoint](https://docs.primeintellect.ai/api-reference/tunnel/create-tunnel-endpoint.md): Create a new tunnel for exposing a local service.
+- [Delete Tunnel Endpoint](https://docs.primeintellect.ai/api-reference/tunnel/delete-tunnel-endpoint.md): Delete a tunnel and disconnect any active clients.
+- [Get Tunnel Status Endpoint](https://docs.primeintellect.ai/api-reference/tunnel/get-tunnel-status-endpoint.md): Get status of a specific tunnel.
+- [List Tunnels Endpoint](https://docs.primeintellect.ai/api-reference/tunnel/list-tunnels-endpoint.md): List all active tunnels for the current user.
+- [Get Whoami](https://docs.primeintellect.ai/api-reference/user/get-whoami.md)
+- [List My Teams](https://docs.primeintellect.ai/api-reference/user/list-my-teams.md)
+- [Set Username Slug](https://docs.primeintellect.ai/api-reference/user/set-username-slug.md)
+- [Get Availability Information](https://docs.primeintellect.ai/cli-reference/check-gpu-availability.md): How to check GPU and disk availability and pricing
+- [Configuration](https://docs.primeintellect.ai/cli-reference/config-cli.md): Configure your Prime CLI settings
+- [Environments Hub](https://docs.primeintellect.ai/cli-reference/environments.md): Create, install and manage environments from the Environments Hub
+- [Overview](https://docs.primeintellect.ai/cli-reference/introduction.md): Command line interface for managing Prime Intellect compute, RL environments and code sandboxes.
+- [Managing Disks](https://docs.primeintellect.ai/cli-reference/managing-disks.md): How to create and manage network-attached storage using the CLI
+- [Provision Instance](https://docs.primeintellect.ai/cli-reference/provision-gpu.md): How to provision an instance using availability data
+- [FAQ](https://docs.primeintellect.ai/faq.md): Frequently Asked Questions
+- [Training Recipes](https://docs.primeintellect.ai/guides/recipes.md): Practical RL training recipes for math reasoning, code generation, tool use, and more on Lab.
+- [Training Search Agents](https://docs.primeintellect.ai/guides/search-agents.md): Build three progressive RL environments for document search and run hosted training on Lab.
+- [Advanced Configurations](https://docs.primeintellect.ai/hosted-training/advanced-configs.md): Full configuration reference for Hosted Training runs
+- [End-to-End Training Run](https://docs.primeintellect.ai/hosted-training/end-to-end-run.md): Walk through a complete hosted RL training run from environment setup to results
+- [Getting Started](https://docs.primeintellect.ai/hosted-training/getting-started.md): Launch your first hosted RL training run in minutes
+- [Models & Pricing](https://docs.primeintellect.ai/hosted-training/models-and-pricing.md): Supported models and pricing for Hosted Training
+- [Troubleshooting](https://docs.primeintellect.ai/hosted-training/troubleshooting.md): Common issues and solutions for Hosted Training and Lab
+- [What is Lab?](https://docs.primeintellect.ai/hosted-training/what-is-lab.md): An overview of Lab, Prime Intellect's open research platform for post-training
+- [Deploying LoRA Adapters for Inference](https://docs.primeintellect.ai/inference/adapter-deployments.md): Deploy trained LoRA adapters from your hosted training runs and query them via an OpenAI-compatible API
+- [Inference Overview](https://docs.primeintellect.ai/inference/overview.md): Access powerful language models through Prime Intellect Inference API
+- [Using Team Accounts](https://docs.primeintellect.ai/inference/team-accounts.md): How to use Prime Inference with team accounts
+- [Advanced Usage](https://docs.primeintellect.ai/inference/usage.md): Streaming, advanced parameters, and usage patterns
+- [Introduction](https://docs.primeintellect.ai/introduction.md): Welcome to the Prime Intellect Documentation
+- [Async](https://docs.primeintellect.ai/prime-rl/async.md)
+- [Benchmarking](https://docs.primeintellect.ai/prime-rl/benchmarking.md)
+- [Checkpointing](https://docs.primeintellect.ai/prime-rl/checkpointing.md)
+- [Configs](https://docs.primeintellect.ai/prime-rl/configs.md)
+- [Deployment](https://docs.primeintellect.ai/prime-rl/deployment.md)
+- [Entrypoints](https://docs.primeintellect.ai/prime-rl/entrypoints.md)
+- [Environments](https://docs.primeintellect.ai/prime-rl/environments.md)
+- [Overview](https://docs.primeintellect.ai/prime-rl/index.md)
+- [Logging](https://docs.primeintellect.ai/prime-rl/logging.md)
+- [Troubleshooting](https://docs.primeintellect.ai/prime-rl/troubleshooting.md)
+- [Sandbox CLI Guide](https://docs.primeintellect.ai/sandboxes/cli.md): Command-line workflows for managing sandboxes
+- [Sandboxes Overview](https://docs.primeintellect.ai/sandboxes/overview.md): Why sandboxes exist, how to launch one, and what it costs
+- [Sandbox SDK Guide](https://docs.primeintellect.ai/sandboxes/sdk.md): Automate sandbox lifecycles with the Python SDK
+- [Prime Tunnel](https://docs.primeintellect.ai/sandboxes/tunnel.md): Expose local services to the internet through secure reverse proxy
+- [Create & Upload Environment](https://docs.primeintellect.ai/tutorials-environments/create.md): Learn how to create and upload environments to Prime Intellect's Environments Hub
+- [Environment Actions](https://docs.primeintellect.ai/tutorials-environments/environment-actions.md): Quick look at the automated checks that run on every environment push
+- [Environment Variables](https://docs.primeintellect.ai/tutorials-environments/environment-variables.md): Configure plain-text key-value pairs injected into your environment at runtime
+- [Overview](https://docs.primeintellect.ai/tutorials-environments/environments.md): Create, manage and share environments for reinforcement learning and evaluation
+- [Evaluating Environments](https://docs.primeintellect.ai/tutorials-environments/evaluating.md): Guide to running evaluations with Prime CLI using Prime Inference models
+- [Getting Started](https://docs.primeintellect.ai/tutorials-environments/getting-started.md): Create, manage and share environments for reinforcement learning and evaluation
+- [Hosted Evaluations](https://docs.primeintellect.ai/tutorials-environments/hosted-evaluations.md): Run environment evaluations on the Environments Hub
+- [Install & Use Environment](https://docs.primeintellect.ai/tutorials-environments/install.md): Learn how to install and use environments from the Prime Intellect Environments Hub
+- [Manage Collaborators](https://docs.primeintellect.ai/tutorials-environments/manage-collaborators.md): Add collaborators to private environments on the Environments Hub.
+- [Secrets](https://docs.primeintellect.ai/tutorials-environments/secrets.md): Create and link secrets across your environments
+- [Deploy Multi-Node Cluster](https://docs.primeintellect.ai/tutorials-multi-node-cluster/deploy-multi-node.md): Deploy a multi-node cluster on the Prime Intellect Platform.
+- [Slurm Orchestration](https://docs.primeintellect.ai/tutorials-multi-node-cluster/slurm-orchestration.md): Deploy and manage multi-node clusters with Slurm workload orchestration on Prime Intellect Platform.
+- [Deploy Custom Docker Image](https://docs.primeintellect.ai/tutorials-on-demand-cloud/deploy-custom-docker-image.md): Deploy a custom Docker image to your Pod
+- [Cluster Monitoring](https://docs.primeintellect.ai/tutorials-reserved-clusters/monitoring.md): Detect issues early and minimize downtime with production-ready monitoring
+- [Cluster storage](https://docs.primeintellect.ai/tutorials-storage/cluster-storage.md): Configure persistent and ephemeral shared storage for multi-node clusters
+- [Create persistent storage](https://docs.primeintellect.ai/tutorials-storage/create-persistent-storage.md): Create storage that can be shared between instances
+- [Use persistent storage with instances](https://docs.primeintellect.ai/tutorials-storage/use-persistent-storage-with-instances.md): How to attach and use persistent storage with instances and clusters
+- [Development](https://docs.primeintellect.ai/verifiers/development.md)
+- [Environments](https://docs.primeintellect.ai/verifiers/environments.md)
+- [Evaluation](https://docs.primeintellect.ai/verifiers/evaluation.md)
+- [Faqs](https://docs.primeintellect.ai/verifiers/faqs.md)
+- [Overview](https://docs.primeintellect.ai/verifiers/overview.md)
+- [Reference](https://docs.primeintellect.ai/verifiers/reference.md)
+- [Training](https://docs.primeintellect.ai/verifiers/training.md)
+
+## OpenAPI Specs
+
+- [openapi-from-anchor-url-1](https://docs.primeintellect.ai/openapi-from-anchor-url-1)
+- [openapi](https://api.primeintellect.ai/openapi.json)
+
+## Optional
+
+- [Join Discord](https://discord.gg/ZTFydGWPKj)
+- [Twitter](https://twitter.com/PrimeIntellect)
+- [Blog](https://www.primeintellect.ai/blog)
