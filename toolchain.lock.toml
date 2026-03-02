@@ -1,0 +1,12 @@
+[python]
+version = "3.14.2"
+
+[cli]
+prime = "0.4.12"
+
+[packages]
+verifiers = "0.1.5"
+datasets = "4.6.1"
+pydantic = "2.12.5"
+beautifulsoup4 = "4.14.3"
+lxml = "6.0.2"

@@ -8,7 +8,16 @@ from typing import Any
 
 
 REQUIRED_PACKET_KEYS = {"deal_id", "decision_date", "prompt", "answer", "info", "evidence_items"}
-REQUIRED_ANSWER_KEYS = {"deal_completed", "outcome_label", "abnormal_return_730d"}
+REQUIRED_ANSWER_KEYS = {
+    "deal_completed",
+    "close_label",
+    "outcome_label",
+    "thesis_hit_label",
+    "abnormal_return_365d",
+    "abnormal_return_730d",
+    "max_drawdown_365d",
+    "max_drawdown_730d",
+}
 REQUIRED_INFO_KEYS = {
     "acquirer",
     "target",
@@ -18,6 +27,7 @@ REQUIRED_INFO_KEYS = {
     "cross_border",
     "premium_pct",
     "regulatory_risk",
+    "source_quality_score",
 }
 
 
@@ -89,7 +99,7 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
             if not isinstance(item, dict):
                 errors.append(f"evidence_items[{i}] must be dict")
                 continue
-            for key in ("evidence_id", "source_type", "source_date", "summary"):
+            for key in ("evidence_id", "source_type", "source_url", "source_date", "source_quality_score", "summary"):
                 if key not in item:
                     errors.append(f"evidence_items[{i}] missing {key}")
 

@@ -1,0 +1,7 @@
+{
+  "dataset": "data/processed/test.jsonl",
+  "dry_run": true,
+  "mean_process_score": 0.725,
+  "n": 12,
+  "predictions": "data/interim/model_matrix/qwen-qwen3-8b.jsonl"
+}

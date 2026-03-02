@@ -2,6 +2,12 @@ __pycache__/
 *.pyc
 .venv/
 .env
+.env.local
+.env.*
+!.env.example
 configs/endpoints/endpoints.toml
 outputs/
 data/interim/*_live.jsonl
+data/interim/model_matrix/
+data/interim/model_matrix_passk/
+data/interim/seed_optimization/

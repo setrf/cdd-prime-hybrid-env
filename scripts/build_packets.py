@@ -31,28 +31,55 @@ WORKSTREAMS = [
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Build packet JSONL from enriched deals")
-    parser.add_argument("--input", default="data/interim/deals_enriched.csv")
-    parser.add_argument("--output", default="data/interim/deal_packets.jsonl")
-    return parser.parse_args()
+    p = argparse.ArgumentParser(description="Build packet JSONL from enriched deals")
+    p.add_argument("--input", default="data/interim/deals_enriched.csv")
+    p.add_argument("--output", default="data/interim/deal_packets.jsonl")
+    p.add_argument("--text-evidence", default="data/interim/text_evidence.jsonl")
+    p.add_argument("--max-text-evidence", type=int, default=1)
+    return p.parse_args()
 
 
-def _as_float(value: str) -> float | None:
+def _as_float(value: str, default: float | None = None) -> float | None:
     v = str(value).strip()
     if not v:
-        return None
-    return float(v)
+        return default
+    try:
+        return float(v)
+    except ValueError:
+        return default
 
 
 def _as_int(value: str) -> int | None:
     v = str(value).strip()
     if not v:
         return None
-    return int(v)
+    try:
+        return int(float(v))
+    except ValueError:
+        return None
 
 
 def _to_bool_flag(value: str) -> bool:
     return str(value).strip().lower() in {"true", "yes", "1", "y"}
+
+
+def load_text_evidence(path: Path) -> dict[str, list[dict[str, Any]]]:
+    if not path.exists():
+        return {}
+    out: dict[str, list[dict[str, Any]]] = {}
+    with path.open() as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            deal_id = str(row.get("deal_id", "")).strip()
+            if not deal_id:
+                continue
+            items = row.get("text_evidence", [])
+            if isinstance(items, list):
+                out[deal_id] = [i for i in items if isinstance(i, dict)]
+    return out
 
 
 def build_user_prompt(row: dict[str, str]) -> str:
@@ -65,9 +92,9 @@ def build_user_prompt(row: dict[str, str]) -> str:
     lines.append(f"Deal Type: {row['deal_type']}")
     lines.append(f"Payment Type: {row['payment_type']}")
     lines.append(f"Cross Border: {row['cross_border']}")
-    lines.append(f"Deal Value (USD B): {row['deal_value_usd_b']}")
+    lines.append(f"Deal Value (USD B): {row.get('deal_value_usd_b', '')}")
     lines.append(f"Premium (%): {row['premium_pct']}")
-    lines.append(f"Regulatory Risk (management estimate): {row['regulatory_risk']}")
+    lines.append(f"Regulatory Risk (pre-deal estimate): {row['regulatory_risk']}")
     lines.append(f"Analyst note: {row['notes']}")
     lines.append("Required CDD workstreams to cover:")
     for w in WORKSTREAMS:
@@ -82,42 +109,64 @@ def build_user_prompt(row: dict[str, str]) -> str:
     return "\n".join(lines)
 
 
-def build_evidence_items(row: dict[str, str]) -> list[dict[str, str]]:
+def build_evidence_items(row: dict[str, str]) -> list[dict[str, Any]]:
     announce = date.fromisoformat(row["announce_date"])
     decision = date.fromisoformat(row["decision_date"])
     pre_macro = max(date(2000, 1, 1), decision - timedelta(days=30))
+    source_url = row.get("primary_source", "")
+    source_quality = _as_float(row.get("source_quality_score", ""), 0.65) or 0.65
+
+    ev1_id = f"EV1_PRIMARY_{row['deal_id']}"
+    ev2_id = f"EV2_TERMS_{row['deal_id']}"
+    ev3_id = f"EV3_CONTEXT_{row['deal_id']}"
 
     return [
         {
-            "evidence_id": "EV1_PRESS_RELEASE",
-            "source_type": "company_press_release",
+            "evidence_id": ev1_id,
+            "source_type": "primary_or_cited_source",
+            "source_url": source_url,
             "source_date": announce.isoformat(),
-            "summary": f"Public announcement of {row['acquirer']} acquiring {row['target']} with headline value {row['deal_value_usd_b']}B.",
+            "source_quality_score": source_quality,
+            "summary": (
+                f"Primary/cited source for {row['acquirer']} acquiring {row['target']} "
+                f"near announcement date."
+            ),
         },
         {
-            "evidence_id": "EV2_DEAL_TERMS",
+            "evidence_id": ev2_id,
             "source_type": "deal_terms_snapshot",
+            "source_url": row.get("source_page", ""),
             "source_date": decision.isoformat(),
-            "summary": f"Terms include payment type {row['payment_type']}, premium {row['premium_pct']}%, and deal type {row['deal_type']}.",
+            "source_quality_score": 0.60,
+            "summary": (
+                f"Terms snapshot: payment={row['payment_type']}, premium={row['premium_pct']}%, "
+                f"cross_border={row['cross_border']}, value_usd_b={row.get('deal_value_usd_b', '')}."
+            ),
         },
         {
-            "evidence_id": "EV3_RISK_CONTEXT",
-            "source_type": "analyst_context",
+            "evidence_id": ev3_id,
+            "source_type": "risk_context",
+            "source_url": row.get("source_page", ""),
             "source_date": pre_macro.isoformat(),
-            "summary": f"Pre-deal risk context: regulatory risk {row['regulatory_risk']}, cross_border={row['cross_border']}.",
+            "source_quality_score": 0.55,
+            "summary": (
+                f"Pre-deal context: regulatory_risk={row['regulatory_risk']}, sector={row['sector']}, "
+                f"deal_type={row['deal_type']}."
+            ),
         },
     ]
 
 
 def main() -> None:
     args = parse_args()
-    input_path = Path(args.input)
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    in_path = Path(args.input)
+    out_path = Path(args.output)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    rows = list(csv.DictReader(input_path.open()))
+    rows = list(csv.DictReader(in_path.open()))
     if not rows:
         raise RuntimeError("input file has no rows")
+    text_evidence_map = load_text_evidence(Path(args.text_evidence))
 
     packets: list[dict[str, Any]] = []
     skipped = 0
@@ -128,14 +177,26 @@ def main() -> None:
             skipped += 1
             continue
 
-        abnormal = _as_float(row.get("abnormal_return_730d", ""))
-        deal_completed = 1 if row["status"].strip().lower() == "completed" else 0
+        deal_completed = _as_int(row.get("close_label", ""))
+        if deal_completed is None:
+            deal_completed = 1 if row.get("status", "").strip().lower() == "completed" else 0
 
         answer_payload = {
             "deal_completed": deal_completed,
+            "close_label": deal_completed,
             "outcome_label": outcome_label,
-            "abnormal_return_730d": abnormal,
+            "thesis_hit_label": _as_int(row.get("thesis_hit_label", "")),
+            "abnormal_return_365d": _as_float(row.get("abnormal_return_365d", "")),
+            "abnormal_return_730d": _as_float(row.get("abnormal_return_730d", "")),
+            "max_drawdown_365d": _as_float(row.get("max_drawdown_365d", "")),
+            "max_drawdown_730d": _as_float(row.get("max_drawdown_730d", "")),
         }
+
+        evidence_items = build_evidence_items(row)
+        extra_evidence = text_evidence_map.get(row["deal_id"], [])
+        if args.max_text_evidence > 0:
+            extra_evidence = extra_evidence[: args.max_text_evidence]
+        evidence_items.extend(extra_evidence)
 
         packet: dict[str, Any] = {
             "deal_id": row["deal_id"],
@@ -144,7 +205,7 @@ def main() -> None:
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": build_user_prompt(row)},
             ],
-            # Some verifiers versions require answer to be string-typed.
+            # verifiers 0.1.5 expects answer string in eval outputs.
             "answer": json.dumps(answer_payload, sort_keys=True),
             "info": {
                 "acquirer": row["acquirer"],
@@ -153,24 +214,27 @@ def main() -> None:
                 "deal_type": row["deal_type"],
                 "payment_type": row["payment_type"],
                 "cross_border": _to_bool_flag(row["cross_border"]),
-                "premium_pct": float(row["premium_pct"]),
+                "premium_pct": _as_float(row.get("premium_pct", ""), 25.0),
                 "regulatory_risk": row["regulatory_risk"],
-                "deal_value_usd_b": float(row["deal_value_usd_b"]),
+                "deal_value_usd_b": _as_float(row.get("deal_value_usd_b", ""), 0.0),
                 "primary_source": row.get("primary_source", ""),
+                "source_page": row.get("source_page", ""),
+                "source_quality_score": _as_float(row.get("source_quality_score", ""), 0.65),
                 "true_outcome_label": outcome_label,
-                "true_deal_completed": deal_completed,
-                "true_abnormal_return_730d": abnormal,
+                "true_close_label": deal_completed,
+                "true_thesis_hit_label": _as_int(row.get("thesis_hit_label", "")),
+                "true_abnormal_return_730d": _as_float(row.get("abnormal_return_730d", "")),
             },
-            "evidence_items": build_evidence_items(row),
+            "evidence_items": evidence_items,
         }
 
         packets.append(packet)
 
-    with output_path.open("w") as f:
+    with out_path.open("w") as f:
         for packet in packets:
             f.write(json.dumps(packet, sort_keys=True) + "\n")
 
-    print(f"wrote {output_path}")
+    print(f"wrote {out_path}")
     print(f"packets={len(packets)} skipped_unlabeled={skipped}")
 
 

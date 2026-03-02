@@ -1,3 +1,12 @@
+{"deal_id": "msft_fungible_2023_7920c702", "features_used": ["low_reg_risk", "moderate_premium", "software_margin_profile"], "predicted_label": 1, "recommendation": "GO", "success_probability": 0.62, "true_label": 1}
+{"deal_id": "dell_cloudify_2023_b8702587", "features_used": ["low_reg_risk", "moderate_premium"], "predicted_label": 1, "recommendation": "GO", "success_probability": 0.6, "true_label": 1}
 {"deal_id": "pfe_sgen_2023", "features_used": ["medium_reg_risk", "high_premium", "cash_certainty"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.466, "true_label": 0}
-{"deal_id": "xom_pxd_2023", "features_used": ["medium_reg_risk", "moderate_premium", "stock_execution_risk"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.4605, "true_label": 0}
+{"deal_id": "msft_nemesys_games_2023_0fb6b469", "features_used": ["medium_reg_risk", "cross_border", "moderate_premium", "software_margin_profile"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.45, "true_label": 1}
+{"deal_id": "goog_photomath_2023_f96e2241", "features_used": ["medium_reg_risk", "cross_border", "moderate_premium", "software_margin_profile"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.45, "true_label": 0}
+{"deal_id": "aapl_mira_labs_2023_edb9db1f", "features_used": ["low_reg_risk", "moderate_premium"], "predicted_label": 1, "recommendation": "GO", "success_probability": 0.6, "true_label": 0}
+{"deal_id": "dell_moogsoft_2023_bbabf631", "features_used": ["low_reg_risk", "moderate_premium"], "predicted_label": 1, "recommendation": "GO", "success_probability": 0.6, "true_label": 1}
+{"deal_id": "sap_leanix_2023_544ccd27", "features_used": ["medium_reg_risk", "cross_border", "moderate_premium", "software_margin_profile"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.45, "true_label": 1}
+{"deal_id": "aapl_bis_records_2023_e7f63e35", "features_used": ["medium_reg_risk", "cross_border", "moderate_premium"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.43, "true_label": 0}
 {"deal_id": "csco_splk_2023", "features_used": ["medium_reg_risk", "high_premium", "cash_certainty", "software_margin_profile"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.492, "true_label": 0}
+{"deal_id": "xom_pxd_2023", "features_used": ["medium_reg_risk", "moderate_premium", "stock_execution_risk"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.4605, "true_label": 0}
+{"deal_id": "aapl_datakalab_2023_ea8a2027", "features_used": ["medium_reg_risk", "cross_border", "moderate_premium"], "predicted_label": 0, "recommendation": "NO_GO", "success_probability": 0.43, "true_label": 0}

@@ -16,7 +16,16 @@ class SchemaTests(unittest.TestCase):
             "deal_id": "x",
             "decision_date": "2020-01-01",
             "prompt": [{"role": "system", "content": "s"}, {"role": "user", "content": "u"}],
-            "answer": {"deal_completed": 1, "outcome_label": 1, "abnormal_return_730d": 0.1},
+            "answer": {
+                "deal_completed": 1,
+                "close_label": 1,
+                "outcome_label": 1,
+                "thesis_hit_label": 1,
+                "abnormal_return_365d": 0.05,
+                "abnormal_return_730d": 0.10,
+                "max_drawdown_365d": -0.08,
+                "max_drawdown_730d": -0.11,
+            },
             "info": {
                 "acquirer": "A",
                 "target": "B",
@@ -26,12 +35,15 @@ class SchemaTests(unittest.TestCase):
                 "cross_border": False,
                 "premium_pct": 30.0,
                 "regulatory_risk": "medium",
+                "source_quality_score": 0.9,
             },
             "evidence_items": [
                 {
                     "evidence_id": "E1",
                     "source_type": "press",
+                    "source_url": "https://example.com/press",
                     "source_date": "2020-01-01",
+                    "source_quality_score": 0.9,
                     "summary": "pre-deal",
                 }
             ],

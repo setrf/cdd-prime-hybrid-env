@@ -1,16 +1,22 @@
 {
-  "accuracy": 1.0,
-  "brier_score": 0.22376008333333333,
+  "accuracy": 0.75,
+  "brier_score": 0.22274835416666672,
   "calibration_bins": [
     {
       "bin": 2.0,
-      "count": 3.0,
-      "obs_rate": 0.0,
-      "pred_mean": 0.4728333333333334
+      "count": 8.0,
+      "obs_rate": 0.25,
+      "pred_mean": 0.4535625
+    },
+    {
+      "bin": 3.0,
+      "count": 4.0,
+      "obs_rate": 0.75,
+      "pred_mean": 0.605
     }
   ],
-  "decision_utility": 0.5,
-  "log_loss": 0.6405819219031818,
-  "n": 3,
+  "decision_utility": 0.20833333333333334,
+  "log_loss": 0.6380678146297439,
+  "n": 12,
   "threshold": 0.55
 }

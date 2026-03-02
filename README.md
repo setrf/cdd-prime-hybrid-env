@@ -21,27 +21,45 @@ Train/evaluate models to perform CDD-like reasoning with two reward families:
 
 ## Implemented Hybrid Flow
 
-1. Build a historical deal universe (`data/raw/deals_seed.csv`).
-2. Enrich with realized outcomes using market data (`scripts/build_outcomes.py`).
-3. Build pre-deal-only packets and prompts (`scripts/build_packets.py`).
-4. Split and validate (`scripts/split_dataset.py`, `scripts/validate_dataset.py`).
-5. Run baseline and evaluate (`scripts/run_heuristic_baseline.py`, `scripts/evaluate_predictions.py`).
-6. Run memorization probes (`scripts/run_memorization_probe.py`).
-7. Use `environments/cdd_hybrid/` with `prime env install` + `prime eval run`.
+1. Validate toolchain and Prime OpenAPI contracts (`scripts/check_toolchain.py`, `scripts/check_prime_openapi_contract.py`).
+2. Build a historical deal universe (`scripts/expand_deals_from_wikipedia.py`, `scripts/merge_deal_sources.py`).
+3. Enrich with realized outcomes using market data (`scripts/build_outcomes.py`).
+4. Ingest richer text evidence snippets (`scripts/enrich_text_evidence.py`).
+5. Build pre-deal-only packets and prompts (`scripts/build_packets.py`).
+6. Split and validate (`scripts/split_dataset.py`, `scripts/validate_dataset.py`).
+7. Run baseline and evaluate (`scripts/run_heuristic_baseline.py`, `scripts/evaluate_predictions.py`, `scripts/evaluate_group_policy.py`).
+8. Run memorization probes and judge scoring (`scripts/run_memorization_probe.py`, `scripts/run_model_judge.py`).
+9. Use `environments/cdd_hybrid/` with `prime env install` + `prime eval run`.
 
 ## Quick Start (Local Smoke)
 
 ```bash
-python3 scripts/build_outcomes.py
-python3 scripts/build_packets.py
-python3 scripts/split_dataset.py
-python3 scripts/validate_dataset.py
-python3 scripts/run_heuristic_baseline.py
-python3 scripts/evaluate_predictions.py \
-  --dataset data/processed/test.jsonl \
-  --predictions data/interim/heuristic_predictions_test.jsonl
-python3 scripts/run_memorization_probe.py --dataset data/processed/test.jsonl --dry-run
-python3 -m unittest discover -s tests -p 'test_*.py'
+set -a; source .env.local; set +a
+./scripts/smoke_pipeline.sh
+```
+
+## Full Pipeline (200+ Deals)
+
+```bash
+set -a; source .env.local; set +a
+./scripts/full_pipeline.sh
+```
+
+This runs:
+- Toolchain lock checks
+- Prime OpenAPI contract checks
+- Wikipedia expansion + source merge
+- Outcome enrichment + rich text evidence ingestion + packetization
+- Split + leakage validation + baseline metrics + group metrics + regression gate + tests
+
+## Toolchain Lock
+
+Pinned versions are in `toolchain.lock.toml`.
+
+Validate:
+
+```bash
+python3 scripts/check_toolchain.py
 ```
 
 ## Prime Integration
@@ -65,14 +83,78 @@ PRIME_API_KEY=... vf-eval cdd_hybrid \
   -s
 ```
 
+## Baseline Matrix and Seed Experiments
+
+Small-model matrix benchmark:
+
+```bash
+set -a; source .env.local; set +a
+python3 scripts/run_model_matrix.py --dataset data/processed/test.jsonl --limit 24
+```
+
+Outputs:
+- `data/interim/model_matrix/benchmark_report.md`
+- `data/interim/model_matrix/benchmark_summary.json`
+- Tracked copies: `reports/benchmark_report.md`, `reports/benchmark_summary.json`
+
+Optional multi-sample pass@k run:
+
+```bash
+set -a; source .env.local; set +a
+python3 scripts/run_model_matrix.py \
+  --dataset data/processed/test.jsonl \
+  --models qwen/qwen3-8b \
+  --limit 12 \
+  --samples-per-deal 3 \
+  --temperature 0.1 \
+  --out-dir data/interim/model_matrix_passk
+```
+
+Three-seed short optimization experiments:
+
+```bash
+set -a; source .env.local; set +a
+python3 scripts/run_seed_optimization.py --dataset data/processed/train.jsonl --eval-dataset data/processed/test.jsonl
+```
+
+Outputs:
+- `data/interim/seed_optimization/seed_results.json`
+- `data/interim/seed_optimization/seed_summary.json`
+- Tracked copy: `reports/seed_summary.json`
+
+## Judge + Group Metrics
+
+Blinded process-quality judge (dry-run heuristic or online model judge):
+
+```bash
+python3 scripts/run_model_judge.py \
+  --dataset data/processed/test.jsonl \
+  --predictions data/interim/model_matrix/qwen-qwen3-8b.jsonl \
+  --dry-run \
+  --output data/interim/model_judge_results.jsonl \
+  --summary-output reports/model_judge_summary.json
+```
+
+Group metrics from multi-sample predictions:
+
+```bash
+python3 scripts/evaluate_group_policy.py \
+  --dataset data/processed/test.jsonl \
+  --predictions data/interim/heuristic_predictions_test.jsonl \
+  --k-values 1 \
+  --output data/interim/group_metrics.json
+cp data/interim/group_metrics.json reports/group_metrics.json
+```
+
 ## Comments
 
-- The current dataset is a seed set intended for pipeline validation and should be expanded for real benchmarking.
+- The current dataset is expanded from public acquisition list pages plus a curated seed set.
 - Time-split evaluation and leakage checks are enforced to reduce label contamination risk.
 - Memorization probing is included and can be run in `--dry-run` or online mode.
+- Judge rubric scoring is blinded to realized outcomes by design.
 
 ## Notes
 
-- Seed deal data is intentionally compact and should be expanded.
-- Some deal dates/fields should be verified against primary filings before production use.
+- Public-source extraction quality depends on citation availability and page structure.
+- For production, enrich evidence from issuer filings/transcripts and internal data room documents.
 - Reward design is modular; adjust weights and thresholds for your IC loss function.

@@ -30,8 +30,8 @@
 - [x] Run unit tests and fix failures.
 
 ## Phase 5: Scale-Up Backlog
-- [ ] Expand deal universe (200-1,000+ deals) with primary-source links.
-- [ ] Add richer textual evidence ingestion (SEC filings, calls, deck snippets).
-- [ ] Add model-based judge rubric with blinded outcome labels.
-- [ ] Add group reward functions and pass@k-style policy metrics.
-- [ ] Add CI contract tests against Prime API/OpenAPI updates.
+- [x] Expand deal universe (200-1,000+ deals) with primary-source links.
+- [x] Add richer textual evidence ingestion (SEC filings, calls, deck snippets).
+- [x] Add model-based judge rubric with blinded outcome labels.
+- [x] Add group reward functions and pass@k-style policy metrics.
+- [x] Add CI contract tests against Prime API/OpenAPI updates.

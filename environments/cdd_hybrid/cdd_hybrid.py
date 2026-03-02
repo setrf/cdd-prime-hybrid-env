@@ -129,6 +129,17 @@ def _recommended_label(parsed: dict[str, Any]) -> int | None:
     return None
 
 
+def _risk_weight(info: Any) -> float:
+    if not isinstance(info, dict):
+        return 1.0
+    risk = str(info.get("regulatory_risk", "medium")).strip().lower()
+    if risk == "high":
+        return 1.35
+    if risk == "medium":
+        return 1.15
+    return 1.0
+
+
 async def format_reward(completion: Any) -> float:
     parsed = _extract_json(_completion_text(completion))
     if parsed is None:
@@ -188,7 +199,22 @@ async def evidence_citation_reward(
     return min(1.0, hits / 3.0)
 
 
-async def calibration_reward(completion: Any, answer: Any) -> float:
+async def citation_validity_reward(completion: Any) -> float:
+    parsed = _extract_json(_completion_text(completion))
+    if parsed is None:
+        return 0.0
+    citations = parsed.get("evidence_citations", [])
+    if not isinstance(citations, list) or not citations:
+        return 0.0
+    valid = 0
+    for c in citations:
+        cs = str(c)
+        if cs.startswith("EV") and "_" in cs:
+            valid += 1
+    return valid / len(citations)
+
+
+async def risk_weighted_calibration_reward(completion: Any, answer: Any, info: Any = None) -> float:
     parsed = _extract_json(_completion_text(completion))
     if parsed is None:
         return 0.0
@@ -199,7 +225,8 @@ async def calibration_reward(completion: Any, answer: Any) -> float:
     if answer_dict is None:
         return 0.0
     y = float(answer_dict.get("outcome_label", 0))
-    return 1.0 - (prob - y) ** 2
+    weighted_error = _risk_weight(info) * (prob - y) ** 2
+    return max(0.0, 1.0 - weighted_error)
 
 
 async def decision_alignment_reward(completion: Any, answer: Any) -> float:
@@ -231,6 +258,30 @@ async def consistency_reward(completion: Any) -> float:
     return 1.0
 
 
+async def contradiction_penalty_reward(completion: Any) -> float:
+    parsed = _extract_json(_completion_text(completion))
+    if parsed is None:
+        return 0.0
+    p = _safe_probability(parsed)
+    rec = _recommended_label(parsed)
+    if p is None or rec is None:
+        return 0.0
+
+    risk_flags = parsed.get("risk_flags", [])
+    if not isinstance(risk_flags, list):
+        risk_flags = []
+    flag_text = " ".join(str(x).lower() for x in risk_flags)
+    severe_terms = {"fatal", "deal-breaker", "blocked", "termination", "impossible", "unresolvable"}
+    severe = any(term in flag_text for term in severe_terms)
+
+    # Contradiction rules.
+    if rec == 1 and p >= 0.75 and severe:
+        return 0.0
+    if rec == 0 and p <= 0.25 and "strong upside" in flag_text:
+        return 0.0
+    return 1.0
+
+
 def load_environment(
     dataset_path: str = "data/processed/train.jsonl",
     eval_dataset_path: str = "data/processed/val.jsonl",
@@ -258,11 +309,13 @@ def load_environment(
             format_reward,
             coverage_reward,
             evidence_citation_reward,
-            calibration_reward,
+            citation_validity_reward,
+            risk_weighted_calibration_reward,
             decision_alignment_reward,
             consistency_reward,
+            contradiction_penalty_reward,
         ],
-        weights=[0.15, 0.20, 0.15, 0.25, 0.20, 0.05],
+        weights=[0.12, 0.18, 0.12, 0.08, 0.22, 0.18, 0.05, 0.05],
     )
 
     return vf.SingleTurnEnv(dataset=dataset, eval_dataset=eval_dataset, rubric=rubric)

@@ -1,0 +1,11 @@
+{
+  "k_metrics": [
+    {
+      "k": 1.0,
+      "majority_vote_utility": 0.20833333333333334,
+      "pass_at_k": 0.75
+    }
+  ],
+  "n_deals": 12,
+  "prediction_source": "data/interim/heuristic_predictions_test.jsonl"
+}

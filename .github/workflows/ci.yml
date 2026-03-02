@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install verifiers==0.1.5 datasets==4.6.1 pydantic==2.12.5 beautifulsoup4==4.14.3 lxml==6.0.2 python-dateutil
+          python -m pip install -e environments/cdd_hybrid
+
+      - name: OpenAPI contract check
+        run: python scripts/check_prime_openapi_contract.py
+
+      - name: Build and validate seed pipeline
+        run: |
+          python scripts/build_outcomes.py --input data/raw/deals_seed.csv --output data/interim/deals_enriched.csv
+          python scripts/enrich_text_evidence.py --input data/interim/deals_enriched.csv --output data/interim/text_evidence.jsonl --max-deals 12 --max-unique-urls 0
+          python scripts/build_packets.py
+          python scripts/split_dataset.py
+          python scripts/validate_dataset.py
+
+      - name: Baseline metrics + regression gate
+        run: |
+          python scripts/run_heuristic_baseline.py --dataset data/processed/test.jsonl --output data/interim/heuristic_predictions_test.jsonl
+          python scripts/evaluate_predictions.py --dataset data/processed/test.jsonl --predictions data/interim/heuristic_predictions_test.jsonl
+          python scripts/evaluate_group_policy.py --dataset data/processed/test.jsonl --predictions data/interim/heuristic_predictions_test.jsonl --k-values 1 --output data/interim/group_metrics.json
+          python scripts/check_regression_thresholds.py
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Compile check
+        run: python -m compileall src scripts environments/cdd_hybrid
